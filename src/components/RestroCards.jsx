@@ -1843,7 +1843,7 @@ import { CDN_URL } from "../utils/contants";
 const RestroCards = ({ name, cuisines, avgRating, cloudinaryImageId }) => {
   // const { name, cuisines, avgRating } = restaurant.data;
   return (
-    <div className="container-card">
+    <div className="container-card" style={{ display: "flex" }}>
       <div className="card">
         <img src={CDN_URL + cloudinaryImageId} alt="" />
         <h2>{name}</h2>
@@ -1853,9 +1853,5 @@ const RestroCards = ({ name, cuisines, avgRating, cloudinaryImageId }) => {
     </div>
   );
 };
-
-{
-  /* <RestroCards restauran={restaurantList[4]} />; */
-}
 
 export default RestroCards;
