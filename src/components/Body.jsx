@@ -11,23 +11,27 @@ const Body = () => {
   const [listOfRestaurantss, setListOfRestaurantss] = useState([]);
 
   useEffect(() => {
-    console.log("hii Nandhu");
+    console.log("hii use effect called  ");
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=10.1334634&lng=76.3976648&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
     );
+
     const json = await data.json();
     console.log(json);
 
+    // Optional Chaining
     setListOfRestaurantss(
-      json.data.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants[0].info
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    console.log(
-      json.data.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants[0].info
-    );
+
+    // console.log(
+    //   json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+    //     ?.restaurants[2].info.name
+    // );
   };
 
   return (
@@ -48,9 +52,15 @@ const Body = () => {
       </div>
       <div className="res-container">
         {listOfRestaurantss.map((restaurant) => {
-          return <RestroCards {...restaurant.data} key={restaurant.data.id} />;
+          return (
+            <RestroCards
+              resData={restaurant?.info}
+              key={restaurant?.info?.id || restaurant.data.id}
+            />
+          );
         })}
       </div>
+
       {/* <RestroCards {...restaurantList[0].data} />
       <RestroCards {...restaurantList[0].data} />
       <RestroCards {...restaurantList[0].data} /> */}
