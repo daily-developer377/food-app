@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import RestroCards from "./RestroCards";
 import SearchBar from "./SearchBar";
+import ShimmerUi from "./Shimmer";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -18,12 +19,17 @@ const Body = () => {
 
     const json = await response.json();
     setListOfRestaurants(
+      // ("?") the question mark is called optional chaining
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || []
     );
 
     console.log("huu", json);
   };
+
+  // if (listOfRestaurants.length == 0) {
+  //   return <ShimmerUi />;
+  // }
 
   const filterTopRated = () => {
     const filteredList = listOfRestaurants.filter(
@@ -32,7 +38,9 @@ const Body = () => {
     setListOfRestaurants(filteredList);
   };
 
-  return (
+  return listOfRestaurants.length == 0 ? (
+    <ShimmerUi />
+  ) : (
     <div className="body">
       <div className="filter">
         <button className="filter-btn" onClick={filterTopRated}>
@@ -48,6 +56,7 @@ const Body = () => {
             cuisines={restaurant.info.cuisines}
             avgRating={restaurant.info.avgRating}
             cloudinaryImageId={restaurant.info.cloudinaryImageId}
+            locality={restaurant.info.locality}
           />
         ))}
       </div>
