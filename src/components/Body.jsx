@@ -7,6 +7,8 @@ import ShimmerUi from "./Shimmer";
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
 
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -21,6 +23,11 @@ const Body = () => {
 
     const json = await response.json();
     setListOfRestaurants(
+      // ("?") the question mark is called optional chaining
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants || []
+    );
+    setFilteredRestaurants(
       // ("?") the question mark is called optional chaining
       json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || []
@@ -56,10 +63,11 @@ const Body = () => {
           />
           <button
             onClick={() => {
+              console.log(searchText);
               const filteredRestaurant = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
-              setListOfRestaurants(filteredRestaurant);
+              setFilteredRestaurants(filteredRestaurant);
             }}
           >
             Search
@@ -71,7 +79,7 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((restaurant) => (
+        {filteredRestaurants.map((restaurant) => (
           <RestroCards
             key={restaurant.info.id}
             name={restaurant.info.name}
