@@ -7,6 +7,8 @@ import ShimmerUi from "./Shimmer";
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
 
+  const [searchText, setSearchText] = useState("");
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -43,10 +45,30 @@ const Body = () => {
   ) : (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              const filteredRestaurant = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setListOfRestaurants(filteredRestaurant);
+            }}
+          >
+            Search
+          </button>
+        </div>
+
         <button className="filter-btn" onClick={filterTopRated}>
           Top Rated Restaurants
         </button>
-        <SearchBar />
       </div>
       <div className="res-container">
         {listOfRestaurants.map((restaurant) => (
