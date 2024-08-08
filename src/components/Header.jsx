@@ -15,7 +15,7 @@ const HeaderComponent = () => {
       <div className="nav-items">
         <ul>
           <a href="/">
-          <li>Home</li>
+            <li>Home</li>
           </a>
           <a href="about">
             <li>About</li>
@@ -23,7 +23,9 @@ const HeaderComponent = () => {
           <a href="contact">
             <li>Contact</li>
           </a>
-          <li>Cart</li>
+          <a href="cart">
+            <li>Cart</li>
+          </a>
         </ul>
       </div>
       <button
