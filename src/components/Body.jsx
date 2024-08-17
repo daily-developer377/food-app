@@ -23,12 +23,12 @@ const Body = () => {
     const json = await response.json();
     setListOfRestaurants(
       // ("?") the question mark is called optional chaining
-      json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || []
     );
     setFilteredRestaurants(
       // ("?") the question mark is called optional chaining
-      json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants || []
     );
 
