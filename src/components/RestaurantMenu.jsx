@@ -1,9 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import ShimmerUi from "./Shimmer";
 
 const RestaurantMenu = () => {
+  const [resInfo, setResIfo] = useState(null);
+
   useEffect(() => {
     fetchMenu();
   }, []);
+
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
 
   const fetchMenu = async () => {
     const data = await fetch(
@@ -12,19 +19,25 @@ const RestaurantMenu = () => {
 
     const json = await data.json();
 
-    console.log(json);
+    console.log("rest inner data", json);
+    setResIfo(json.data);
   };
 
-  return (
+  const { name, city, cuisines } = resInfo?.cards[2]?.card?.card?.info;
+
+  return resInfo === null ? (
+    <ShimmerUi />
+  ) : (
     <div className="menu">
-      <h1>Restaurant Name</h1>
-      <h2>Menu</h2>
-      <ul>
-        <li>Appetizers</li>
-        <li>Main Course</li>
-        <li>Desserts</li>
-        <li>Beverages</li>
-      </ul>
+      <h1>{name}</h1>
+
+      <h2>
+        {city} - {cuisines.join(",")}
+      </h2>
+
+      {/* <ul>
+        <li>{resInfo?.cards[2]?.card?.card?.info?.cuisines}</li>
+      </ul> */}
     </div>
   );
 };
