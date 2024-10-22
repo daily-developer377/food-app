@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ShimmerUi from "./Shimmer";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResIfo] = useState(null);
+  const [resInfo, setResInfo] = useState(null);
 
   useEffect(() => {
     fetchMenu();
@@ -20,10 +20,13 @@ const RestaurantMenu = () => {
     const json = await data.json();
 
     console.log("rest inner data", json);
-    setResIfo(json.data);
+    setResInfo(json.data);
   };
 
-  const { name, city, cuisines } = resInfo?.cards[2]?.card?.card?.info;
+  const menuApi =
+    "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=10.1340201&lng=76.4013471&restaurantId=229326&catalog_qa=undefined&submitAction=ENTER";
+
+  const { name, city, cuisines } = resInfo?.cards[2]?.card?.card?.info || {};
 
   return resInfo === null ? (
     <ShimmerUi />
@@ -31,9 +34,8 @@ const RestaurantMenu = () => {
     <div className="menu">
       <h1>{name}</h1>
 
-      <h2>
-        {city} - {cuisines.join(",")}
-      </h2>
+      <h2>Location - {city}</h2>
+      <p>Cuisines - {cuisines.join(",")}</p>
 
       {/* <ul>
         <li>{resInfo?.cards[2]?.card?.card?.info?.cuisines}</li>
