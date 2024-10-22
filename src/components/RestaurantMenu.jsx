@@ -26,7 +26,9 @@ const RestaurantMenu = () => {
   const menuApi =
     "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=10.1340201&lng=76.4013471&restaurantId=229326&catalog_qa=undefined&submitAction=ENTER";
 
-  const { name, city, cuisines } = resInfo?.cards[2]?.card?.card?.info || {};
+  const { name, city, cuisines,costForTwoMessage } = resInfo?.cards[2]?.card?.card?.info || {};
+
+  // const {itemCards} = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
   return resInfo === null ? (
     <ShimmerUi />
@@ -35,6 +37,7 @@ const RestaurantMenu = () => {
       <h1>{name}</h1>
 
       <h2>Location - {city}</h2>
+      <h3>Cost For Two - {costForTwoMessage}</h3>
       <p>Cuisines - {cuisines.join(",")}</p>
 
       {/* <ul>
