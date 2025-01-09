@@ -14,7 +14,7 @@ const RestaurantMenu = () => {
 
   const fetchMenu = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=10.1340201&lng=76.4013471&restaurantId=395367&catalog_qa=undefined&submitAction=ENTER"
+      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=10.12523&lng=76.377925&restaurantId=72667&catalog_qa=undefined&submitAction=ENTER"
     );
 
     const json = await data.json();
@@ -23,26 +23,26 @@ const RestaurantMenu = () => {
     setResInfo(json.data);
   };
 
-  const menuApi =
-    "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=10.1340201&lng=76.4013471&restaurantId=229326&catalog_qa=undefined&submitAction=ENTER";
+  if (resInfo === null) return <ShimmerUi />;
+  const { name, city, cuisines, costForTwoMessage } = resInfo?.cards[2]?.card?.card?.info || {};
 
-  const { name, city, cuisines,costForTwoMessage } = resInfo?.cards[2]?.card?.card?.info || {};
+  const { itemCards } = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
-  // const {itemCards} = resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
+  console.log("item cards", itemCards);
 
-  return resInfo === null ? (
-    <ShimmerUi />
-  ) : (
+  return (
     <div className="menu">
       <h1>{name}</h1>
 
       <h2>Location - {city}</h2>
       <h3>Cost For Two - {costForTwoMessage}</h3>
       <p>Cuisines - {cuisines.join(",")}</p>
-
-      {/* <ul>
-        <li>{resInfo?.cards[2]?.card?.card?.info?.cuisines}</li>
-      </ul> */}
+      <h3>Menu</h3>
+      {itemCards.map((item) => (
+        <li key={item.card.info.id}>
+          {item.card.info.name} - {item.card.info.price || item.card.info.defaultPrice / 100}
+        </li>
+      ))}
     </div>
   );
 };

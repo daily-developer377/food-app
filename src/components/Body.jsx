@@ -23,13 +23,11 @@ const Body = () => {
     const json = await response.json();
     setListOfRestaurants(
       // ("?") the question mark is called optional chaining
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || []
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []
     );
     setFilteredRestaurants(
       // ("?") the question mark is called optional chaining
-      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants || []
+      json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants || []
     );
 
     console.log("huu", json);
@@ -40,9 +38,7 @@ const Body = () => {
   // }
 
   const filterTopRated = () => {
-    const filteredList = listOfRestaurants.filter(
-      (res) => res.info.avgRating > 4.3
-    );
+    const filteredList = listOfRestaurants.filter((res) => res.info.avgRating > 4.3);
     setFilteredRestaurants(filteredList);
   };
 
